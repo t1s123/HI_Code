@@ -1,0 +1,32 @@
+name: Hourly SMS Scheduler
+
+on:
+  schedule:
+    - cron: "0 * * * *"   # run every hour
+  workflow_dispatch:       # allows manual runs
+
+jobs:
+  run_sms_schedule:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Pull repo
+      - uses: actions/checkout@v4
+
+      # Install Python
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      # Recreate your secure text files from secrets
+      - name: Rebuild secure files
+        run: |
+          echo "${{ secrets.TEXTBEEKEY }}" > TextBeeKey.txt
+          echo "${{ secrets.SERVICEACCOUNTJSON }}" > service_account.json
+
+      # Run your script with secrets available
+      - name: Run smsSchedule.py
+        env:
+          KEY: ${{ secrets.KEY }}
+        run: |
+          python smsSchedule.py
