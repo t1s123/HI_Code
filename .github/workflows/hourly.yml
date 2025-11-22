@@ -1,32 +1,46 @@
-name: Hourly SMS Scheduler
+name: Hourly Python Script
 
 on:
   schedule:
-    - cron: "0 * * * *"   # run every hour
-  workflow_dispatch:       # allows manual runs
+    - cron: "0 * * * *"  # Run every hour at minute 0
 
 jobs:
-  run_sms_schedule:
+  run:
     runs-on: ubuntu-latest
 
     steps:
-      # Pull repo
-      - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
 
-      # Install Python
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
+    - name: Restore info.txt
+      uses: actions/download-artifact@v4
+      with:
+        name: info
+        path: .
+      continue-on-error: true
 
-      # Recreate your secure text files from secrets
-      - name: Rebuild secure files
-        run: |
-          echo "${{ secrets.TEXTBEEKEY }}" > TextBeeKey.txt
-          echo "${{ secrets.SERVICEACCOUNTJSON }}" > service_account.json
+    - name: Create info.txt if missing
+      run: |
+        if [ ! -f info.txt ]; then
+          echo "info.txt missing — creating blank file."
+          touch info.txt
+        fi
 
-      # Run your script with secrets available
-      - name: Run smsSchedule.py
-        env:
-          KEY: ${{ secrets.KEY }}
-        run: |
-          python smsSchedule.py
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Run smsSchedule.py
+      env:
+        KEY: ${{ secrets.KEY }}
+        TEXTBEEKEY: ${{ secrets.TEXTBEEKEY }}
+        SERVICEACCOUNTJSON: ${{ secrets.SERVICEACCOUNTJSON }}
+      run: python smsSchedule.py
+
+    - name: Save info.txt
+      uses: actions/upload-artifact@v4
+      with:
+        name: info
+        path: info.txt
+        retention-days: 90
