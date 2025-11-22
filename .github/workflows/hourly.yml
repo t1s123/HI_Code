@@ -31,6 +31,10 @@ jobs:
       with:
         python-version: "3.11"
 
+    - name: Create service_account.json
+      run: |
+        echo "$SERVICEACCOUNTJSON" > service_account.json
+
     - name: Run smsSchedule.py
       env:
         KEY: ${{ secrets.KEY }}
