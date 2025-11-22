@@ -44,7 +44,7 @@ if(delta>1):
     schedule="in "+str(delta)+" days."
 
 if(check.check(scheduler_name)):
-    if((now.hour==16 and now.minute>=55) and (now.hour==17 and now.minute<=5)):
+    if((now.hour==16 and now.minute>=45) or (now.hour==17 and now.minute<=15)):
         message = f"Hello "+scheduler_name+"!"+" This is a reminder that you are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
         scheduler_number=="4437927273"
         messenger.text(scheduler_number,message,key)
@@ -67,3 +67,4 @@ else:
 
 with open('info.txt','w') as f:
     f.writelines([scheduler_name+'\n',scheduler_number+'\n',start_str+'\n'])
+
