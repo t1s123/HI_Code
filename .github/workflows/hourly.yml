@@ -14,12 +14,13 @@ jobs:
       uses: actions/checkout@v4
 
     # Try to restore previously saved info.txt
-    - name: Restore info.txt (ignore if missing)
+    - name: Download info
       uses: actions/download-artifact@v4
       with:
         name: info
         path: .
-      continue-on-error: true
+      continue-on-error: true   # <-- first run will succeed even if missing
+
 
     # If no artifact existed, use repo version or create new
     - name: Ensure info.txt exists
