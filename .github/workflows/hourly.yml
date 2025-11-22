@@ -9,17 +9,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
+    - name: Checkout repo
       uses: actions/checkout@v4
 
-    - name: Restore info.txt
+    # Try to restore previously saved info.txt
+    - name: Restore info.txt (ignore if missing)
       uses: actions/download-artifact@v4
       with:
         name: info
         path: .
       continue-on-error: true
 
-    - name: Create info.txt if missing
+    # If no artifact existed, use repo version or create new
+    - name: Ensure info.txt exists
       run: |
         if [ ! -f info.txt ]; then
           echo "info.txt missing — creating blank file."
@@ -31,10 +33,14 @@ jobs:
       with:
         python-version: "3.11"
 
+    # Create service_account.json from encrypted secret
     - name: Create service_account.json
       run: |
         echo "$SERVICEACCOUNTJSON" > service_account.json
+      env:
+        SERVICEACCOUNTJSON: ${{ secrets.SERVICEACCOUNTJSON }}
 
+    # Run your script
     - name: Run smsSchedule.py
       env:
         KEY: ${{ secrets.KEY }}
@@ -42,7 +48,8 @@ jobs:
         SERVICEACCOUNTJSON: ${{ secrets.SERVICEACCOUNTJSON }}
       run: python smsSchedule.py
 
-    - name: Save info.txt
+    # Save updated info.txt artifact for next run
+    - name: Save updated info.txt
       uses: actions/upload-artifact@v4
       with:
         name: info
