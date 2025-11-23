@@ -46,7 +46,7 @@ if(delta>1):
 if(check.check(scheduler_name)):
     if((now.hour==21 and now.minute>=45) or (now.hour==22 and now.minute<=15)):
         message = f"Hello "+scheduler_name+"!"+" This is a reminder that you are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
-        scheduler_number="4437927273"
+        scheduler_number="4437937273"
         messenger.text(scheduler_number,message,key)
         #input("NUMBER: "+scheduler_number+"\nMESSAGE: "+message+"\nKEY: "+key)
         #time.sleep(300)
@@ -56,16 +56,17 @@ else:
     prev_number=reader.readlines('info.txt')[1]
 
     message_current = f"Hello "+scheduler_name+"!"+" This is a reminder that you have been switched out for "+prev_name+" and are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
-    prev_number="4437927273"
+    prev_number="4437937273"
     messenger.text(prev_number,message_current,key)
     #input("NUMBER: "+scheduler_number+"\nMESSAGE: "+message_current+"\nKEY: "+key)
     message_prev = f"Hello "+prev_name+"!"+" This is a you have been switched out with "+scheduler_name+" for "+schedule+", you do NOT need to come in."
-    scheduler_number="4437927273"
+    scheduler_number="4437937273"
     messenger.text(scheduler_number,message_prev,key)
     #input("NUMBER: "+scheduler_number+"\nMESSAGE: "+message_prev+"\nKEY: "+key)
 
 
 with open('info.txt','w') as f:
     f.writelines([scheduler_name+'\n',scheduler_number+'\n',start_str+'\n'])
+
 
 
