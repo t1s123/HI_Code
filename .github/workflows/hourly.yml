@@ -3,57 +3,72 @@ name: Hourly Python Script
 on:
   workflow_dispatch:      # allows manual runs
   schedule:
-    - cron: "0 * * * *"
-    
+    - cron: "0 * * * *"  # every hour
+
 jobs:
   run:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
+      # 1️⃣ Checkout the repository
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-    # Try to restore previously saved info.txt
-    - name: Download info
-      uses: actions/download-artifact@v4
-      with:
-        name: info
-        path: .
-      continue-on-error: true   # <-- first run will succeed even if missing
+      # 2️⃣ Install jq (needed to parse JSON for release)
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
 
+      # 3️⃣ Download info.txt from draft release (if exists)
+      - name: Download info.txt from release
+        run: |
+          set -e
+          RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/${{ github.repository }}/releases/tags/persistent-info || true)
 
-    # If no artifact existed, use repo version or create new
-    - name: Ensure info.txt exists
-      run: |
-        if [ ! -f info.txt ]; then
-          echo "info.txt missing — creating blank file."
-          touch info.txt
-        fi
+          # Check if release exists
+          if echo "$RESPONSE" | grep -q '"Not Found"'; then
+            echo "Release not found — creating blank info.txt"
+            touch info.txt
+          else
+            ASSET_URL=$(echo "$RESPONSE" | jq -r '.assets[] | select(.name=="info.txt") | .url')
+            if [ -n "$ASSET_URL" ]; then
+              echo "Downloading previous info.txt..."
+              curl -L -H "Accept: application/octet-stream" \
+                   -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                   -o info.txt "$ASSET_URL"
+            else
+              echo "info.txt not found in release — creating blank file."
+              touch info.txt
+            fi
+          fi
 
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.11"
+      # 4️⃣ Setup Python
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-    # Create service_account.json from encrypted secret
-    - name: Create service_account.json
-      run: |
-        echo "$SERVICEACCOUNTJSON" > service_account.json
-      env:
-        SERVICEACCOUNTJSON: ${{ secrets.SERVICEACCOUNTJSON }}
+      # 5️⃣ Create service_account.json from secret
+      - name: Create service_account.json
+        run: echo "$SERVICEACCOUNTJSON" > service_account.json
+        env:
+          SERVICEACCOUNTJSON: ${{ secrets.SERVICEACCOUNTJSON }}
 
-    # Run your script
-    - name: Run smsSchedule.py
-      env:
-        KEY: ${{ secrets.KEY }}
-        TEXTBEEKEY: ${{ secrets.TEXTBEEKEY }}
-        SERVICEACCOUNTJSON: ${{ secrets.SERVICEACCOUNTJSON }}
-      run: python smsSchedule.py
+      # 6️⃣ Run your Python script
+      - name: Run smsSchedule.py
+        env:
+          KEY: ${{ secrets.KEY }}
+          TEXTBEEKEY: ${{ secrets.TEXTBEEKEY }}
+          SERVICEACCOUNTJSON: ${{ secrets.SERVICEACCOUNTJSON }}
+        run: python smsSchedule.py
 
-    # Save updated info.txt artifact for next run
-    - name: Save updated info.txt
-      uses: actions/upload-artifact@v4
-      with:
-        name: info
-        path: info.txt
-        retention-days: 90
+      # 7️⃣ Upload updated info.txt to draft release
+      - name: Upload info.txt to release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: persistent-info
+          name: persistent-info
+          draft: true
+          files: info.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
