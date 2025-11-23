@@ -42,21 +42,19 @@ jobs:
             fi
           fi
 
-      # 4️⃣ Setup Python
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      
       - name: Install Python dependencies
         run: pip install --upgrade pip && pip install -r requirements.txt
-
-      # 5️⃣ Create service_account.json from secret
+      
       - name: Create service_account.json
         run: echo "$SERVICEACCOUNTJSON" > service_account.json
         env:
           SERVICEACCOUNTJSON: ${{ secrets.SERVICEACCOUNTJSON }}
-
-      # 6️⃣ Run your Python script
+      
       - name: Run smsSchedule.py
         env:
           KEY: ${{ secrets.KEY }}
