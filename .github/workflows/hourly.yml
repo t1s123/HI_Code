@@ -47,6 +47,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Install Python dependencies
+        run: pip install --upgrade pip && pip install -r requirements.txt
 
       # 5️⃣ Create service_account.json from secret
       - name: Create service_account.json
