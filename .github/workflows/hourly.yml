@@ -1,24 +1,21 @@
 name: Hourly Python Script
 
 on:
-  workflow_dispatch:      # allows manual runs
-  schedule:
-    - cron: "50 * * * *"  # every hour
+  workflow_dispatch:      
+  #schedule:
+    #- cron: "50 * * * *" 
 
 jobs:
   run:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout the repository
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      # 2️⃣ Install jq (needed to parse JSON for release)
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      # 3️⃣ Download info.txt from draft release (if exists)
       - name: Download info.txt from release
         run: |
           set -e
@@ -62,7 +59,6 @@ jobs:
           SERVICEACCOUNTJSON: ${{ secrets.SERVICEACCOUNTJSON }}
         run: python smsSchedule.py
 
-      # 7️⃣ Upload updated info.txt to draft release
       - name: Upload info.txt to release
         uses: softprops/action-gh-release@v1
         with:
