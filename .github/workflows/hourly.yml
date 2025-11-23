@@ -3,7 +3,7 @@ name: Hourly Python Script
 on:
   workflow_dispatch:      # allows manual runs
   schedule:
-    - cron: "0 * * * *"  # every hour
+    - cron: "50 * * * *"  # every hour
 
 jobs:
   run:
