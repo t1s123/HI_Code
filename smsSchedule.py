@@ -50,6 +50,39 @@ elif(delta>0):
 if(delta>1):
     schedule="in "+str(delta)+" days."
 
+
+
+
+
+
+
+
+
+
+
+print("Sending:", "ryan", ryan)
+print(messenger.text(ryan, "TEST", key))
+
+if(check.check(ma_1_name)):
+    ma_1_message = f"Hello "+ma_1_name+"!"+" This is a reminder that you are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
+
+    messenger.text(ryan,"Not the right time, no changed, personal test. "+ma_1_message,key)
+
+if(check.check(ma_2_name)):
+    ma_2_message = f"Hello "+ma_2_name+"!"+" This is a reminder that you are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
+
+    messenger.text(ryan,"Not the right time, no changed, personal test. "+ma_2_message,key)
+
+
+
+
+
+
+
+
+
+
+
 if((now.hour==21 and now.minute>=45) or (now.hour==22 and now.minute<=15)):
     if(check.check(ma_1_name)):
         ma_1_message = f"Hello "+ma_1_name+"!"+" This is a reminder that you are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
@@ -70,16 +103,6 @@ if((now.hour==21 and now.minute>=45) or (now.hour==22 and now.minute<=15)):
         messenger.text(has,ma_2_message,key)
 
         messenger.text(nhu,ma_2_message,key)
-
-        messenger.text(ryan,ma_2_message,key)
-else:
-    if(check.check(ma_1_name)):
-        ma_1_message = f"Hello "+ma_1_name+"!"+" This is a reminder that you are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
-
-        messenger.text(ryan,ma_1_message,key)
-
-    if(check.check(ma_2_name)):
-        ma_2_message = f"Hello "+ma_2_name+"!"+" This is a reminder that you are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
 
         messenger.text(ryan,ma_2_message,key)
 
