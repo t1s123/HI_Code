@@ -55,11 +55,9 @@ jobs:
 
       - name: Run smsSchedule.py
         env:
-          KEY: ${{ secrets.KEY }}
           TEXTBEEKEY: ${{ secrets.TEXTBEEKEY }}
-        run: |
-          echo "Running smsSchedule.py..."
-          python smsSchedule.py
+          SERVICEACCOUNTJSON: ${{ secrets.SERVICEACCOUNTJSON }}
+        run: python smsSchedule.py
 
       - name: Upload info.txt to release
         uses: softprops/action-gh-release@v1
