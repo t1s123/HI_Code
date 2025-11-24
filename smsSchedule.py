@@ -59,7 +59,7 @@ if(delta>1):
 
 
 
-
+print("Using key:", key)
 print("Sending:", "ryan", ryan)
 print(messenger.text(ryan, "TEST", key))
 
@@ -146,3 +146,4 @@ elif(not check.check(ma_2_name)):
 
 with open('info.txt','w') as f:
     f.writelines([ma_1_name+'\n',ma_1_number+'\n',ma_2_name+'\n',ma_2_number+'\n',start_str+'\n'])
+
