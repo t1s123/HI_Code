@@ -7,6 +7,7 @@ import FILEOP
 import Sheets
 import Check
 import time
+import os
 
 messenger=Text.SMS()
 reader=FILEOP.FILE()
@@ -14,7 +15,7 @@ check=Check.Check()
 
 today = date.today()
 now=datetime.now()
-key=reader.read('TextBeeKey.txt')
+key = os.getenv("TEXTBEEKEY")
 
 has="3477409462"
 nhu="2403149462"
@@ -59,7 +60,7 @@ if(delta>1):
 
 
 
-print("Using key:", key)
+
 print("Sending:", "ryan", ryan)
 print(messenger.text(ryan, "TEST", key))
 
@@ -146,4 +147,3 @@ elif(not check.check(ma_2_name)):
 
 with open('info.txt','w') as f:
     f.writelines([ma_1_name+'\n',ma_1_number+'\n',ma_2_name+'\n',ma_2_number+'\n',start_str+'\n'])
-
