@@ -1,9 +1,9 @@
 name: Hourly Python Script
 
 on:
-  workflow_dispatch:      
+  workflow_dispatch:
   schedule:
-    - cron: "45 * * * *" 
+    - cron: "45 * * * *"
 
 jobs:
   run:
@@ -19,22 +19,23 @@ jobs:
       - name: Download info.txt from release
         run: |
           set -e
-          RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          RESPONSE=$(curl -s \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             https://api.github.com/repos/${{ github.repository }}/releases/tags/persistent-info || true)
 
-          # Check if release exists
           if echo "$RESPONSE" | grep -q '"Not Found"'; then
             echo "Release not found — creating blank info.txt"
             touch info.txt
           else
-            ASSET_URL=$(echo "$RESPONSE" | jq -r '.assets[] | select(.name=="info.txt") | .url')
+            ASSET_URL=$(echo "$RESPONSE" | jq -r '.assets[]? | select(.name=="info.txt") | .url')
             if [ -n "$ASSET_URL" ]; then
-              echo "Downloading previous info.txt..."
-              curl -L -H "Accept: application/octet-stream" \
-                   -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                   -o info.txt "$ASSET_URL"
+              echo "Downloading info.txt..."
+              curl -L \
+                -H "Accept: application/octet-stream" \
+                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                -o info.txt "$ASSET_URL"
             else
-              echo "info.txt not found in release — creating blank file."
+              echo "info.txt missing in release — creating blank file."
               touch info.txt
             fi
           fi
@@ -43,28 +44,28 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      
+
       - name: Install Python dependencies
         run: pip install --upgrade pip && pip install -r requirements.txt
-      
+
       - name: Create service_account.json
-        run: echo "$SERVICEACCOUNTJSON" > service_account.json
-        env:
-          SERVICEACCOUNTJSON: ${{ secrets.SERVICEACCOUNTJSON }}
-      
+        run: echo "${{ secrets.SERVICEACCOUNTJSON }}" > service_account.json
+
+      - name: Create TextBeeKey.txt
+        run: echo "${{ secrets.TEXTBEEKEY }}" > TextBeeKey.txt
+
       - name: Run smsSchedule.py
         env:
           KEY: ${{ secrets.KEY }}
           TEXTBEEKEY: ${{ secrets.TEXTBEEKEY }}
-          SERVICEACCOUNTJSON: ${{ secrets.SERVICEACCOUNTJSON }}
         run: python smsSchedule.py
 
-      - name: Upload info.txt to release
+      - name: Upload updated info.txt
         uses: softprops/action-gh-release@v1
         with:
           tag_name: persistent-info
           name: persistent-info
-          draft: true
+          draft: false        # IMPORTANT: release must be published
           files: info.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
