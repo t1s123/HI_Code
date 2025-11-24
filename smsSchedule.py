@@ -8,14 +8,18 @@ import Sheets
 import Check
 import time
 import os
+from zoneinfo import ZoneInfo
+
 
 messenger=Text.SMS()
 reader=FILEOP.FILE()
 check=Check.Check()
 
+
 today = date.today()
-now=datetime.now()
+now= datetime.now(ZoneInfo("America/New_York"))
 key = os.getenv("TEXTBEEKEY")
+#key=reader.read('TextBeeKey.txt')
 
 has="3477409462"
 nhu="2403149462"
@@ -51,40 +55,7 @@ elif(delta>0):
 if(delta>1):
     schedule="in "+str(delta)+" days."
 
-
-
-
-
-
-
-
-
-
-
-print("Sending:", "ryan", ryan)
-print(messenger.text(ryan, "TEST", key))
-
-if(check.check(ma_1_name)):
-    ma_1_message = f"Hello "+ma_1_name+"!"+" This is a reminder that you are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
-
-    messenger.text(ryan,"Not the right time, no changed, personal test. "+ma_1_message,key)
-
-if(check.check(ma_2_name)):
-    ma_2_message = f"Hello "+ma_2_name+"!"+" This is a reminder that you are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
-
-    messenger.text(ryan,"Not the right time, no changed, personal test. "+ma_2_message,key)
-
-
-
-
-
-
-
-
-
-
-
-if((now.hour==21 and now.minute>=45) or (now.hour==22 and now.minute<=15)):
+if((now.hour==11 and now.minute>=45) or (now.hour==12 and now.minute<=15)):
     if(check.check(ma_1_name)):
         ma_1_message = f"Hello "+ma_1_name+"!"+" This is a reminder that you are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
 
