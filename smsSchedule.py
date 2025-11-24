@@ -18,6 +18,7 @@ key=reader.read('TextBeeKey.txt')
 
 has="3477409462"
 nhu="2403149462"
+ryan="4437937273"
 
 spreadsheet='https://docs.google.com/spreadsheets/d/1TNfQEpC2mWLuSg0wZZLcKmlKocfoemsnc4eREBVhg2Y/edit?gid=0#gid=0'
 
@@ -59,6 +60,8 @@ if((now.hour==21 and now.minute>=45) or (now.hour==22 and now.minute<=15)):
 
         messenger.text(nhu,ma_1_message,key)
 
+        messenger.text(ryan,ma_1_message,key)
+
     if(check.check(ma_2_name)):
         ma_2_message = f"Hello "+ma_2_name+"!"+" This is a reminder that you are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
 
@@ -67,6 +70,8 @@ if((now.hour==21 and now.minute>=45) or (now.hour==22 and now.minute<=15)):
         messenger.text(has,ma_2_message,key)
 
         messenger.text(nhu,ma_2_message,key)
+
+        messenger.text(ryan,ma_2_message,key)
 
 if(not check.check(ma_1_name)):
     prev_ma_1=reader.readlines('info.txt')[0].strip()
@@ -84,6 +89,9 @@ if(not check.check(ma_1_name)):
     messenger.text(nhu,message_current,key)
     messenger.text(nhu,message_prev,key)
 
+    messenger.text(ryan,message_current,key)
+    messenger.text(ryan,message_prev,key)
+
 elif(not check.check(ma_2_name)):
     prev_ma_2=reader.readlines('info.txt')[2].strip()
     prev_ma_2_number=reader.readlines('info.txt')[3]
@@ -99,6 +107,9 @@ elif(not check.check(ma_2_name)):
 
     messenger.text(nhu,message_current,key)
     messenger.text(nhu,message_prev,key)
+
+    messenger.text(ryan,message_current,key)
+    messenger.text(ryan,message_prev,key)
 
 with open('info.txt','w') as f:
     f.writelines([ma_1_name+'\n',ma_1_number+'\n',ma_2_name+'\n',ma_2_number+'\n',start_str+'\n'])
