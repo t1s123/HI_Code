@@ -72,6 +72,16 @@ if((now.hour==21 and now.minute>=45) or (now.hour==22 and now.minute<=15)):
         messenger.text(nhu,ma_2_message,key)
 
         messenger.text(ryan,ma_2_message,key)
+else:
+    if(check.check(ma_1_name)):
+        ma_1_message = f"Hello "+ma_1_name+"!"+" This is a reminder that you are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
+
+        messenger.text(ryan,ma_1_message,key)
+
+    if(check.check(ma_2_name)):
+        ma_2_message = f"Hello "+ma_2_name+"!"+" This is a reminder that you are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
+
+        messenger.text(ryan,ma_2_message,key)
 
 if(not check.check(ma_1_name)):
     prev_ma_1=reader.readlines('info.txt')[0].strip()
