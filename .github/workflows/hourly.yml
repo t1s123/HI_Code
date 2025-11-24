@@ -19,23 +19,21 @@ jobs:
       - name: Download info.txt from release
         run: |
           set -e
-          RESPONSE=$(curl -s \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             https://api.github.com/repos/${{ github.repository }}/releases/tags/persistent-info || true)
 
           if echo "$RESPONSE" | grep -q '"Not Found"'; then
             echo "Release not found — creating blank info.txt"
             touch info.txt
           else
-            ASSET_URL=$(echo "$RESPONSE" | jq -r '.assets[]? | select(.name=="info.txt") | .url')
+            ASSET_URL=$(echo "$RESPONSE" | jq -r '.assets[] | select(.name=="info.txt") | .url')
             if [ -n "$ASSET_URL" ]; then
-              echo "Downloading info.txt..."
-              curl -L \
-                -H "Accept: application/octet-stream" \
-                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                -o info.txt "$ASSET_URL"
+              echo "Downloading previous info.txt..."
+              curl -L -H "Accept: application/octet-stream" \
+                   -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                   -o info.txt "$ASSET_URL"
             else
-              echo "info.txt missing in release — creating blank file."
+              echo "info.txt not found in release — creating blank file."
               touch info.txt
             fi
           fi
@@ -48,24 +46,27 @@ jobs:
       - name: Install Python dependencies
         run: pip install --upgrade pip && pip install -r requirements.txt
 
-      - name: Create service_account.json
-        run: echo "${{ secrets.SERVICEACCOUNTJSON }}" > service_account.json
-
-      - name: Create TextBeeKey.txt
-        run: echo "${{ secrets.TEXTBEEKEY }}" > TextBeeKey.txt
+      # -----------------------
+      # FIXED: Proper JSON decode
+      # -----------------------
+      - name: Restore service_account.json
+        run: |
+          echo "${{ secrets.SERVICE_JSON_B64 }}" | base64 --decode > service_account.json
 
       - name: Run smsSchedule.py
         env:
           KEY: ${{ secrets.KEY }}
           TEXTBEEKEY: ${{ secrets.TEXTBEEKEY }}
-        run: python smsSchedule.py
+        run: |
+          echo "Running smsSchedule.py..."
+          python smsSchedule.py
 
-      - name: Upload updated info.txt
+      - name: Upload info.txt to release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: persistent-info
           name: persistent-info
-          draft: false        # IMPORTANT: release must be published
+          draft: true
           files: info.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
