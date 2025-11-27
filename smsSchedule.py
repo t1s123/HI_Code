@@ -21,7 +21,7 @@ now= datetime.now(ZoneInfo("America/New_York"))
 key = os.getenv("TEXTBEEKEY")
 #key=reader.read('TextBeeKey.txt')
 
-has="3477409462"
+has="3477401544"
 nhu="2403149462"
 ryan="4437937273"
 
@@ -118,3 +118,4 @@ elif(not check.check(ma_2_name)):
 
 with open('info.txt','w') as f:
     f.writelines([ma_1_name+'\n',ma_1_number+'\n',ma_2_name+'\n',ma_2_number+'\n',start_str+'\n'])
+
