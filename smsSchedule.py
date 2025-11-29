@@ -33,7 +33,10 @@ info = Sheets.Sheets(spreadsheet).get_sheet_by_name('Scheduler Info')
 schedule_start_dates = prov_ma_sheet.col_values(prov_ma_sheet.row_values(1).index("Date") + 1)[1:]
 
 for each_date in schedule_start_dates:
-    start_date = datetime.strptime(each_date, "%m/%d/%Y").date()
+    try:
+        start_date = datetime.strptime(each_date, "%m/%d/%Y").date()
+    except:
+        print("INVALID DATE: "+start_date)
     if(today<start_date):
         start_str=start_date.strftime("%m/%d/%Y")
         delta=(start_date-today).days
@@ -118,4 +121,5 @@ elif(not check.check(ma_2_name)):
 
 with open('info.txt','w') as f:
     f.writelines([ma_1_name+'\n',ma_1_number+'\n',ma_2_name+'\n',ma_2_number+'\n',start_str+'\n'])
+
 
