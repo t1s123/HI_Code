@@ -37,6 +37,7 @@ for each_date in schedule_start_dates:
         start_date = datetime.strptime(each_date, "%m/%d/%Y").date()
     except:
         print("INVALID DATE: "+start_date)
+        continue
     if(today<start_date):
         start_str=start_date.strftime("%m/%d/%Y")
         delta=(start_date-today).days
