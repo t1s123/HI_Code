@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: checkout repo
         uses: actions/checkout@v4
 
-      - name: Install jq
+      - name: install jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Download info.txt from release
+      - name: download info
         run: |
           set -e
           RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
@@ -38,28 +38,25 @@ jobs:
             fi
           fi
 
-      - name: Setup Python
+      - name: python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install Python dependencies
+      - name: dependencies
         run: pip install --upgrade pip && pip install -r requirements.txt
 
-      # -----------------------
-      # FIXED: Proper JSON decode
-      # -----------------------
-      - name: Restore service_account.json
+      - name: decode account
         run: |
           echo "${{ secrets.SERVICE_JSON_B64 }}" | base64 --decode > service_account.json
 
-      - name: Run smsSchedule.py
+      - name: run script
         env:
           TEXTBEEKEY: ${{ secrets.TEXTBEEKEY }}
           SERVICEACCOUNTJSON: ${{ secrets.SERVICEACCOUNTJSON }}
         run: python smsSchedule.py
 
-      - name: Upload info.txt to release
+      - name: upload info
         uses: softprops/action-gh-release@v1
         with:
           tag_name: persistent-info
