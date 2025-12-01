@@ -89,7 +89,7 @@ if(not check.check(ma_1_name)):
     prev_ma_1_number=reader.readlines('info.txt')[1]
 
     message_current = f"Hello "+ma_1_name+"!"+" This is a reminder that you have been switched out for "+prev_ma_1+" and are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
-    message_prev = f"Hello "+prev_ma_1+"!"+" This is a you have been switched out with "+ma_1_name+" for the shift "+schedule+" you do NOT need to come in."
+    message_prev = f"Hello "+prev_ma_1+"!"+" This is a you have been switched out with "+ma_1_name+" for the shift "+schedule+" you don't need to come in."
 
     messenger.text(ma_1_number,message_current,key)
     messenger.text(prev_ma_1_number,message_prev,key)
@@ -112,7 +112,7 @@ elif(not check.check(ma_2_name)):
     prev_ma_2_number=reader.readlines('info.txt')[3]
 
     message_current = f"Hello "+ma_2_name+"!"+" This is a reminder that you have been switched out for "+prev_ma_2+" and are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
-    message_prev = f"Hello "+prev_ma_2+"!"+" This is a you have been switched out with "+ma_2_name+" for the shift "+schedule+" You do NOT need to come in."
+    message_prev = f"Hello "+prev_ma_2+"!"+" This is a you have been switched out with "+ma_2_name+" for the shift "+schedule+" You don't need to come in."
 
     messenger.text(ma_2_number,message_current,key)
     messenger.text(prev_ma_2_number,message_prev,key)
@@ -128,6 +128,7 @@ elif(not check.check(ma_2_name)):
 
 with open('info.txt','w') as f:
     f.writelines([ma_1_name+'\n',ma_1_number+'\n',ma_2_name+'\n',ma_2_number+'\n',start_str+'\n'])
+
 
 
 
