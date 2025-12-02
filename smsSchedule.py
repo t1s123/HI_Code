@@ -21,8 +21,8 @@ now= datetime.now(ZoneInfo("America/New_York"))
 key = os.getenv("TEXTBEEKEY")
 #key=reader.read('TextBeeKey.txt')
 
-has="3477401544"
-nhu="2403149462"
+#has="3477401544"
+#nhu="2403149462"
 ryan="4437937273"
 
 spreadsheet='https://docs.google.com/spreadsheets/d/1TNfQEpC2mWLuSg0wZZLcKmlKocfoemsnc4eREBVhg2Y/edit?gid=0#gid=0'
@@ -65,22 +65,22 @@ if((now.hour==11 and now.minute>=45) or (now.hour==12 and now.minute<=15)):
     if(check.check(ma_1_name)):
         ma_1_message = f"Hello "+ma_1_name+"!"+" This is a reminder that you are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
 
-        messenger.text(ma_1_number,ma_1_message,key)
+        #messenger.text(ma_1_number,ma_1_message,key)
 
-        messenger.text(has,ma_1_message,key)
+        #messenger.text(has,ma_1_message,key)
 
-        messenger.text(nhu,ma_1_message,key)
+        #messenger.text(nhu,ma_1_message,key)
 
         messenger.text(ryan,ma_1_message,key)
 
     if(check.check(ma_2_name)):
         ma_2_message = f"Hello "+ma_2_name+"!"+" This is a reminder that you are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
 
-        messenger.text(ma_2_number,ma_2_message,key)
+        #messenger.text(ma_2_number,ma_2_message,key)
 
-        messenger.text(has,ma_2_message,key)
+        #messenger.text(has,ma_2_message,key)
 
-        messenger.text(nhu,ma_2_message,key)
+        #messenger.text(nhu,ma_2_message,key)
 
         messenger.text(ryan,ma_2_message,key)
 
@@ -91,14 +91,14 @@ if(not check.check(ma_1_name)):
     message_current = f"Hello "+ma_1_name+"!"+" This is a reminder that you have been switched out for "+prev_ma_1+" and are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
     message_prev = f"Hello "+prev_ma_1+"!"+" This is a you have been switched out with "+ma_1_name+" for the shift "+schedule+" you don't need to come in."
 
-    messenger.text(ma_1_number,message_current,key)
-    messenger.text(prev_ma_1_number,message_prev,key)
+    #messenger.text(ma_1_number,message_current,key)
+    #messenger.text(prev_ma_1_number,message_prev,key)
 
-    messenger.text(has,message_current,key)
-    messenger.text(has,message_prev,key)
+    # messenger.text(has,message_current,key)
+    # messenger.text(has,message_prev,key)
 
-    messenger.text(nhu,message_current,key)
-    messenger.text(nhu,message_prev,key)
+    # messenger.text(nhu,message_current,key)
+    # messenger.text(nhu,message_prev,key)
 
     messenger.text(ryan,message_current,key)
     messenger.text(ryan,message_prev,key)
@@ -114,20 +114,21 @@ elif(not check.check(ma_2_name)):
     message_current = f"Hello "+ma_2_name+"!"+" This is a reminder that you have been switched out for "+prev_ma_2+" and are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
     message_prev = f"Hello "+prev_ma_2+"!"+" This is a you have been switched out with "+ma_2_name+" for the shift "+schedule+" You don't need to come in."
 
-    messenger.text(ma_2_number,message_current,key)
-    messenger.text(prev_ma_2_number,message_prev,key)
+    # messenger.text(ma_2_number,message_current,key)
+    # messenger.text(prev_ma_2_number,message_prev,key)
 
-    messenger.text(has,message_current,key)
-    messenger.text(has,message_prev,key)
+    # messenger.text(has,message_current,key)
+    # messenger.text(has,message_prev,key)
 
-    messenger.text(nhu,message_current,key)
-    messenger.text(nhu,message_prev,key)
+    # messenger.text(nhu,message_current,key)
+    # messenger.text(nhu,message_prev,key)
 
     messenger.text(ryan,message_current,key)
     messenger.text(ryan,message_prev,key)
 
 with open('info.txt','w') as f:
     f.writelines([ma_1_name+'\n',ma_1_number+'\n',ma_2_name+'\n',ma_2_number+'\n',start_str+'\n'])
+
 
 
 
