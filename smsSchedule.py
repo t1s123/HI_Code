@@ -28,7 +28,7 @@ ryan="4437937273"
 spreadsheet='https://docs.google.com/spreadsheets/d/1TNfQEpC2mWLuSg0wZZLcKmlKocfoemsnc4eREBVhg2Y/edit?gid=0#gid=0'
 
 prov_ma_sheet = Sheets.Sheets(spreadsheet).get_sheet_by_name('Provider and MA Calendar')
-info = Sheets.Sheets(spreadsheet).get_sheet_by_name('Scheduler Info')
+info = Sheets.Sheets(spreadsheet).get_sheet_by_name('Scheduler and MA Contact')
 
 schedule_start_dates = prov_ma_sheet.col_values(prov_ma_sheet.row_values(1).index("Date") + 1)[1:]
 
@@ -128,6 +128,7 @@ elif(not check.check(ma_2_name)):
 
 with open('info.txt','w') as f:
     f.writelines([ma_1_name+'\n',ma_1_number+'\n',ma_2_name+'\n',ma_2_number+'\n',start_str+'\n'])
+
 
 
 
