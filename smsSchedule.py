@@ -47,8 +47,15 @@ start_str=start_str.replace("/0", "/")
 ma_1_name=prov_ma_sheet.row_values(prov_ma_sheet.find(start_str).row)[2]
 ma_2_name=prov_ma_sheet.row_values(prov_ma_sheet.find(start_str).row)[3]
 
-ma_1_number=re.sub(r'\D', '', info.row_values(info.find(ma_1_name).row)[2]).strip()
-ma_2_number=re.sub(r'\D', '', info.row_values(info.find(ma_2_name).row)[2]).strip()
+try:
+    ma_1_number=re.sub(r'\D', '', info.row_values(info.find(ma_1_name).row)[2]).strip()
+except:
+    ma_1_number="none"
+
+try:
+    ma_2_number=re.sub(r'\D', '', info.row_values(info.find(ma_2_name).row)[2]).strip()
+except:
+    ma_2_number="none"
 
 ma_1_name=ma_1_name.strip()
 ma_2_name=ma_2_name.strip()
@@ -128,6 +135,7 @@ elif(not check.check(ma_2_name)):
 
 with open('info.txt','w') as f:
     f.writelines([ma_1_name+'\n',ma_1_number+'\n',ma_2_name+'\n',ma_2_number+'\n',start_str+'\n'])
+
 
 
 
