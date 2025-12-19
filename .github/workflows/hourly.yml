@@ -61,7 +61,7 @@ jobs:
         with:
           tag_name: persistent-info
           name: persistent-info
-          draft: true
+          draft: false
           files: info.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
