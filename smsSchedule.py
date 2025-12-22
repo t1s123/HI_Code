@@ -42,7 +42,7 @@ for each_date in schedule_start_dates:
             if(delta>7 and schedule_start_dates[schedule_start_dates.index(each_date)-1]==''):
                 cont=False
                 if(True):
-                    messenger.text(ryan,"There is not an appoinment for this week. The next appointment will be " + start_date.strftime("%m/%d/%Y") + ".",key)
+                    messenger.text(ryan,"There is not an appoinment for this week. The next appointment will be " + start_date.strftime("%m-%d-%Y") + ".",key)
 if(cont):
     provider_name=prov_ma_sheet.row_values(prov_ma_sheet.find(start_str).row)[1]
     ma_1_name=prov_ma_sheet.row_values(prov_ma_sheet.find(start_str).row)[2]
@@ -100,5 +100,6 @@ if(cont):
 
     with open('info.txt','w') as f:
         f.writelines([ma_1_name+'\n',ma_1_number+'\n',ma_2_name+'\n',ma_2_number+'\n',start_str+'\n'])
+
 
 
