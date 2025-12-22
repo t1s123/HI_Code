@@ -67,7 +67,7 @@ if(cont):
     if(delta>1):
         schedule="in "+str(delta)+" days."
 
-    if((now.hour==16 and now.minute>=45) or (now.hour==17 and now.minute<=15)):
+    if(True):
         if(check.check(ma_1_name) and ma_1_name!="None"):
             ma_1_message = f"Hello "+ma_1_name+"!"+" This is a reminder that you are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
 
@@ -100,3 +100,4 @@ if(cont):
 
     with open('info.txt','w') as f:
         f.writelines([ma_1_name+'\n',ma_1_number+'\n',ma_2_name+'\n',ma_2_number+'\n',start_str+'\n'])
+
