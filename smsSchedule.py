@@ -75,9 +75,9 @@ if(cont):
         if(check.check(ma_1_name) and ma_1_name!="None"):
             ma_1_message = f"Hello "+ma_1_name+"!"+" This is a reminder that you are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
 
-            #messenger.text(provider_number,ma_1_message + " This is a message copied to the provider of this week.",key)
-            #if(delta==7 or delta ==4):
-                #messenger.text(ma_1_number,ma_1_message,key)
+            messenger.text(provider_number,ma_1_message + " This is a message copied to the provider of this week.",key)
+            if(delta==7 or delta ==4):
+                messenger.text(ma_1_number,ma_1_message,key)
 
             #messenger.text(has,ma_1_message,key)
 
@@ -88,10 +88,10 @@ if(cont):
         if(check.check(ma_2_name) and ma_2_name!="None"):
             ma_2_message = f"Hello "+ma_2_name+"!"+" This is a reminder that you are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
             
-            #messenger.text(provider_number,ma_2_message + " This is a message copied to the provider of this week.",key)
+            messenger.text(provider_number,ma_2_message + " This is a message copied to the provider of this week.",key)
 
-            #if(delta==7 or delta ==4):
-                #messenger.text(ma_2_number,ma_2_message,key)
+            if(delta==7 or delta ==4):
+                messenger.text(ma_2_number,ma_2_message,key)
 
             #messenger.text(has,ma_2_message,key)
 
@@ -106,9 +106,9 @@ if(cont):
         message_current = f"Hello "+ma_1_name+"!"+" This is a reminder that you have been switched out for "+prev_ma_1+" and are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
         message_prev = f"Hello "+prev_ma_1+"!"+" This is a notification you have been switched out with "+ma_1_name+" for the shift "+schedule+" you do not need to come in."
 
-        #if(delta==7 or delta ==4):
-            # messenger.text(ma_1_number,message_current,key)
-            # messenger.text(prev_ma_1_number,message_prev,key)
+        if(delta==7 or delta ==4):
+            messenger.text(ma_1_number,message_current,key)
+            messenger.text(prev_ma_1_number,message_prev,key)
 
         # messenger.text(has,message_current,key)
         # messenger.text(has,message_prev,key)
@@ -116,8 +116,8 @@ if(cont):
         # messenger.text(nhu,message_current,key)
         # messenger.text(nhu,message_prev,key)
 
-        # messenger.text(provider_number,message_current + " This is a message copied to the provider of this week.",key)
-        # messenger.text(provider_number,message_prev + " This is a message copied to the provider of this week.",key)
+        messenger.text(provider_number,message_current + " This is a message copied to the provider of this week.",key)
+        messenger.text(provider_number,message_prev + " This is a message copied to the provider of this week.",key)
 
         messenger.text(ryan,message_current,key)
         messenger.text(ryan,message_prev,key)
@@ -129,9 +129,9 @@ if(cont):
         message_current = f"Hello "+ma_2_name+"!"+" This is a reminder that you have been switched out for "+prev_ma_2+" and are scheduled for "+start_str+", which is "+schedule+" Please remember to come in."
         message_prev = f"Hello "+prev_ma_2+"!"+" This is a you have been switched out with "+ma_2_name+" for the shift "+schedule+" You do not need to come in."
 
-        #if(delta==7 or delta ==4):
-            # messenger.text(ma_2_number,message_current,key)
-            # messenger.text(prev_ma_2_number,message_prev,key)
+        if(delta==7 or delta ==4):
+            messenger.text(ma_2_number,message_current,key)
+            messenger.text(prev_ma_2_number,message_prev,key)
 
         # messenger.text(has,message_current,key)
         # messenger.text(has,message_prev,key)
@@ -139,8 +139,8 @@ if(cont):
         # messenger.text(nhu,message_current,key)
         # messenger.text(nhu,message_prev,key)
 
-        # messenger.text(provider_number,message_current+ " This is a message copied to the provider of this week.",key)
-        # messenger.text(provider_number,message_prev+ " This is a message copied to the provider of this week.",key)
+        messenger.text(provider_number,message_current+ " This is a message copied to the provider of this week.",key)
+        messenger.text(provider_number,message_prev+ " This is a message copied to the provider of this week.",key)
 
         messenger.text(ryan,message_current,key)
         messenger.text(ryan,message_prev,key)
